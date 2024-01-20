@@ -17,7 +17,6 @@ def as_request(async_method=False, is_list=False):
     def decorator(func):
         @functools.wraps(func)
         def sync_wrapper(_, *args, **kwargs):
-            print(kwargs)
             response = request(*args, **kwargs)
             return response.json()['data'] if is_list else response.json()
 
