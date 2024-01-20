@@ -1,6 +1,7 @@
 import httpx
 
 from typing import Optional, Dict, Any
+from requests import request
 
 
 async def a_request(method: str, url: str,
