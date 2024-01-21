@@ -120,7 +120,7 @@ class AssistantClient():
         pass
     
     @bind_formatter(format_create_args)
-    @as_request(async_method=False)
+    @as_request()
     def create(self, **kwargs):
         pass
     
@@ -130,7 +130,7 @@ class AssistantClient():
         pass
     
     @bind_formatter(format_update_args)
-    @as_request(async_method=False)
+    @as_request()
     def update(self, **kwargs):
         pass
     
@@ -140,7 +140,7 @@ class AssistantClient():
           pass
     
     @bind_formatter(format_attach_file_args)
-    @as_request(async_method=False)
+    @as_request()
     def attach_file(self, **kwargs):
         pass
     
@@ -150,7 +150,7 @@ class AssistantClient():
         pass
     
     @bind_formatter(format_detach_file_args)
-    @as_request(async_method=False)
+    @as_request()
     def detach_file(self, **kwargs):
         pass
     
@@ -160,7 +160,7 @@ class AssistantClient():
         pass
     
     @bind_formatter(format_retrieve_args)
-    @as_request(async_method=False)
+    @as_request()
     def retrieve(self, **kwargs):
         pass
     
@@ -170,7 +170,7 @@ class AssistantClient():
         pass
     
     @bind_formatter(format_get_files_list_args)
-    @as_request(async_method=False, is_list=True)
+    @as_request(is_list=True)
     def get_files_list(self, **kwargs):
         pass
     
@@ -180,7 +180,7 @@ class AssistantClient():
         pass
     
     @bind_formatter(format_retrieve_file_args)
-    @as_request(async_method=False)
+    @as_request()
     def retrieve_file(self, **kwargs):
         pass
     
@@ -190,7 +190,7 @@ class AssistantClient():
         pass
     
     @bind_formatter(format_delete_args)
-    @as_request(async_method=False)
+    @as_request()
     def delete(self, **kwargs):
         pass
     
