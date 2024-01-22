@@ -1,6 +1,7 @@
 import os
 
-from src.openai_assistants_api.methods_utils import bind_formatter, as_request
+from requests import request
+from src.http_utils import a_request
 
 
 API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -22,7 +23,7 @@ def format_create_args(thread_id, assistant_id, model=None, instructions=None,
         }
     body = {k: v for k, v in body.items() if v is not None}
     return {
-        "url": f"https://api.openai.com/v1/threads/{thread_id}/assistants",
+        "url": f"https://api.openai.com/v1/threads/{thread_id}/runs",
         "method": "POST",
         "json": body,
         "headers": HEADERS
@@ -126,93 +127,56 @@ def format_cancel_args(thread_id, run_id):
 
 class RunClient():
     
-    @bind_formatter(format_create_args)
-    @as_request()
-    def create(self, **kwargs):
-        pass
+    def create(self, *args, **kwargs):
+        return request(**format_create_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_create_args)
-    @as_request(async_method=True)
-    async def a_create(self, **kwargs):
-        pass
+    async def a_create(self, *args, **kwargs):
+        return (await a_request(**format_create_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_create_thread_and_run)
-    @as_request()
-    def create_thread_and_run(self, **kwargs):
-        pass
+    def create_thread_and_run(self, *args, **kwargs):
+        return request(**format_create_thread_and_run(*args, **kwargs)).json()
     
-    @bind_formatter(format_create_thread_and_run)
-    @as_request(async_method=True)
-    async def a_create_thread_and_run(self, **kwargs):
-        pass
+    async def a_create_thread_and_run(self, *args, **kwargs):
+        return (await a_request(**format_create_thread_and_run(*args, **kwargs))).json()
     
-    @bind_formatter(format_get_list_args)
-    @as_request()
-    def get_list(self, **kwargs):
-        pass
+    def get_list(self, *args, **kwargs):
+        return request(**format_get_list_args(*args, **kwargs)).json()['data']
     
-    @bind_formatter(format_get_list_args)
-    @as_request(async_method=True)
-    async def a_get_list(self, **kwargs):
-        pass
+    async def a_get_list(self, *args, **kwargs):
+        return (await a_request(**format_get_list_args(*args, **kwargs))).json()['data']
     
-    @bind_formatter(format_get_steps_list_args)
-    @as_request()
-    def get_steps_list(self, **kwargs):
-        pass
+    def get_steps_list(self, *args, **kwargs):
+        return request(**format_get_steps_list_args(*args, **kwargs)).json()['data']
     
-    @bind_formatter(format_get_steps_list_args)
-    @as_request(async_method=True)
-    async def a_get_steps_list(self, **kwargs):
-        pass
+    async def a_get_steps_list(self, *args, **kwargs):
+        return (await a_request(**format_get_steps_list_args(*args, **kwargs))).json()['data']
     
-    @bind_formatter(format_retrieve_args)
-    @as_request()
-    def retrieve(self, **kwargs):
-        pass
+    def retrieve(self, *args, **kwargs):
+        return request(**format_retrieve_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_retrieve_args)
-    @as_request(async_method=True)
-    async def a_retrieve(self, **kwargs):
-        pass
+    async def a_retrieve(self, *args, **kwargs):
+        return (await a_request(**format_retrieve_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_retrieve_step_args)
-    @as_request()
-    def retrieve_step(self, **kwargs):
-        pass
+    def retrieve_step(self, *args, **kwargs):
+        return request(**format_retrieve_step_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_retrieve_step_args)
-    @as_request(async_method=True)
-    async def a_retrieve_step(self, **kwargs):
-        pass
+    async def a_retrieve_step(self, *args, **kwargs):
+        return (await a_request(**format_retrieve_step_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_update_args)
-    @as_request()
-    def update(self, **kwargs):
-        pass
+    def update(self, *args, **kwargs):
+        return request(**format_update_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_update_args)
-    @as_request(async_method=True)
-    async def a_update(self, **kwargs):
-          pass
-      
-    @bind_formatter(format_submit_tool_outputs)
-    @as_request()
-    def submit_tool_outputs(self, **kwargs):
-        pass
+    async def a_update(self, *args, **kwargs):
+        return (await a_request(**format_update_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_submit_tool_outputs)
-    @as_request(async_method=True)
-    async def a_submit_tool_outputs(self, **kwargs):
-        pass
-        
-    @bind_formatter(format_cancel_args)
-    @as_request()
-    def cancel(self, **kwargs):
-        pass
+    def submit_tool_outputs(self, *args, **kwargs):
+        return request(**format_submit_tool_outputs(*args, **kwargs)).json()
     
-    @bind_formatter(format_cancel_args)
-    @as_request(async_method=True)
-    async def a_cancel(self, **kwargs):
-        pass
+    async def a_submit_tool_outputs(self, *args, **kwargs):
+        return (await a_request(**format_submit_tool_outputs(*args, **kwargs))).json()
     
+    def cancel(self, *args, **kwargs):
+        return request(**format_cancel_args(*args, **kwargs)).json()
+    
+    async def a_cancel(self, *args, **kwargs):
+        return (await a_request(**format_cancel_args(*args, **kwargs))).json()

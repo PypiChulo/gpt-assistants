@@ -1,6 +1,7 @@
 import os
 
-from src.openai_assistants_api.methods_utils import bind_formatter, as_request
+from requests import request
+from src.http_utils import a_request
 
 
 API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -17,7 +18,7 @@ def format_create_args(messages=None, metadata=None):
         }
         body = {k: v for k, v in body.items() if v is not None}
         return {
-            "url": "https://api.openai.com/v1/assistants",
+            "url": "https://api.openai.com/v1/threads",
             "method": "POST",
             "json": body,
             "headers": HEADERS
@@ -52,42 +53,28 @@ def format_delete_args(thread_id):
 
 class ThreadClient():
     
-    @bind_formatter(format_create_args)
-    @as_request()
-    def create(self, **kwargs):
-        pass
+    def create(self, *args, **kwargs):
+        return request(**format_create_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_create_args)
-    @as_request(async_method=True)
-    async def a_create(self, **kwargs):
-        pass
+    async def a_create(self, *args, **kwargs):
+        return (await a_request(**format_create_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_retrieve_args)
-    @as_request()
-    def retrieve(self, **kwargs):
-        pass
-        
-    @bind_formatter(format_retrieve_args)
-    @as_request(async_method=True)
-    async def a_retrieve(self, **kwargs):
-        pass
+    def retrieve(self, *args, **kwargs):
+        return request(**format_retrieve_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_update_args)
-    @as_request()
-    def update(self, **kwargs):
-        pass
+    async def a_retrieve(self, *args, **kwargs):
+        return (await a_request(**format_retrieve_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_update_args)
-    @as_request(async_method=True)
-    async def a_update(self, **kwargs):
-          pass
-        
-    @bind_formatter(format_delete_args)
-    @as_request()
-    def delete(self, **kwargs):
-        pass
+    def update(self, *args, **kwargs):
+        return request(**format_update_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_delete_args)
-    @as_request(async_method=True)
-    async def a_delete(self, **kwargs):
-        pass
+    async def a_update(self, *args, **kwargs):
+        return (await a_request(**format_update_args(*args, **kwargs))).json()
+    
+    def delete(self, *args, **kwargs):
+        return request(**format_delete_args(*args, **kwargs)).json()
+    
+    async def a_delete(self, *args, **kwargs):
+        return (await a_request(**format_delete_args(*args, **kwargs))).json()
+    
+    

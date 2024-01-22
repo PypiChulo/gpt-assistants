@@ -1,6 +1,7 @@
 import os
 
-from src.openai_assistants_api.methods_utils import bind_formatter, as_request
+from requests import request
+from src.http_utils import a_request
 
 
 API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -109,92 +110,56 @@ def format_delete_args(assistant_id):
     
 class AssistantClient():
     
-    @bind_formatter(format_get_list_args)
-    @as_request(async_method=False, is_list=True)
-    def get_list(self, **kwargs):
-        pass
+    def get_list(self, *args, **kwargs):
+        return request(**format_get_list_args(*args, **kwargs)).json()['data'] 
         
-    @bind_formatter(format_get_list_args)
-    @as_request(async_method=True, is_list=True)   
-    async def a_get_list(self, **kwargs):
-        pass
+    async def a_get_list(self, *args, **kwargs):
+        return (await a_request(**format_get_list_args(*args, **kwargs))).json()['data']
     
-    @bind_formatter(format_create_args)
-    @as_request()
-    def create(self, **kwargs):
-        pass
+    def create(self, *args, **kwargs):
+        return request(**format_create_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_create_args)
-    @as_request(async_method=True)
-    async def a_create(self, **kwargs):
-        pass
+    async def a_create(self, *args, **kwargs):
+        return (await a_request(**format_create_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_update_args)
-    @as_request()
-    def update(self, **kwargs):
-        pass
+    def update(self, *args, **kwargs):
+        return request(**format_update_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_update_args)
-    @as_request(async_method=True)
-    async def a_update(self, **kwargs):
-          pass
+    async def a_update(self, *args, **kwargs):
+        return (await a_request(**format_update_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_attach_file_args)
-    @as_request()
-    def attach_file(self, **kwargs):
-        pass
+    def attach_file(self, *args, **kwargs):
+        return request(**format_attach_file_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_attach_file_args)
-    @as_request(async_method=True)
-    async def a_attach_file(self, **kwargs):
-        pass
+    async def a_attach_file(self, *args, **kwargs):
+        return (await a_request(**format_attach_file_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_detach_file_args)
-    @as_request()
-    def detach_file(self, **kwargs):
-        pass
+    def detach_file(self, *args, **kwargs):
+        return request(**format_detach_file_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_detach_file_args)
-    @as_request(async_method=True)
-    async def a_detach_file(self, **kwargs):
-        pass
+    async def a_detach_file(self, *args, **kwargs):
+        return (await a_request(**format_detach_file_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_retrieve_args)
-    @as_request()
-    def retrieve(self, **kwargs):
-        pass
+    def get_files_list(self, *args, **kwargs):
+        return request(**format_get_files_list_args(*args, **kwargs)).json()['data']
     
-    @bind_formatter(format_retrieve_args)
-    @as_request(async_method=True)
-    async def a_retrieve(self, **kwargs):
-        pass
+    async def a_get_files_list(self, *args, **kwargs):
+        return (await a_request(**format_get_files_list_args(*args, **kwargs))).json()['data']
     
-    @bind_formatter(format_get_files_list_args)
-    @as_request(is_list=True)
-    def get_files_list(self, **kwargs):
-        pass
+    def retrieve_file(self, *args, **kwargs):
+        return request(**format_retrieve_file_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_get_files_list_args)
-    @as_request(async_method=True, is_list=True)
-    async def a_get_files_list(self, **kwargs):
-        pass
+    async def a_retrieve_file(self, *args, **kwargs):
+        return (await a_request(**format_retrieve_file_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_retrieve_file_args)
-    @as_request()
-    def retrieve_file(self, **kwargs):
-        pass
+    def retrieve(self, *args, **kwargs):
+        return request(**format_retrieve_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_retrieve_file_args)
-    @as_request(async_method=True)
-    async def a_retrieve_file(self, **kwargs):
-        pass
+    async def a_retrieve(self, *args, **kwargs):
+        return (await a_request(**format_retrieve_args(*args, **kwargs))).json()
     
-    @bind_formatter(format_delete_args)
-    @as_request()
-    def delete(self, **kwargs):
-        pass
+    def delete(self, *args, **kwargs):
+        return request(**format_delete_args(*args, **kwargs)).json()
     
-    @bind_formatter(format_delete_args)
-    @as_request(async_method=True)
-    async def a_delete(self, **kwargs):
-        pass
+    async def a_delete(self, *args, **kwargs):
+        return (await a_request(**format_delete_args(*args, **kwargs))).json()
